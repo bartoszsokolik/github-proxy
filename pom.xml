@@ -18,6 +18,11 @@
   <properties>
     <java.version>11</java.version>
     <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${project.build.directory}/site/jacoco/jacoco.xml,
+      ${project.build.directory}/site/jacoco-it/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.exclusions>**/dto/**, **/GithubProxyApplication.java</sonar.exclusions>
   </properties>
 
   <dependencies>
@@ -126,7 +131,6 @@
           <execution>
             <goals>
               <goal>integration-test</goal>
-              <goal>verify</goal>
             </goals>
           </execution>
         </executions>
@@ -138,16 +142,27 @@
         <version>0.8.4</version>
         <executions>
           <execution>
-            <id>pre-unit-test</id>
+            <id>default-prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
           <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
+            <id>default-prepare-agent-integration</id>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report</id>
             <goals>
               <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-report-integration</id>
+            <goals>
+              <goal>report-integration</goal>
             </goals>
           </execution>
         </executions>
