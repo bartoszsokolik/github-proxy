@@ -3,6 +3,21 @@ management:
   endpoints.web:
     base-path: /
     exposure.include: health, info
+
 github:
   api:
     url: https://api.github.com
+
+resilience4j.circuitbreaker:
+  instances:
+    github:
+      registerHealthIndicator: false
+  configs:
+    default:
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 2s
+      failureRateThreshold: 50
+
