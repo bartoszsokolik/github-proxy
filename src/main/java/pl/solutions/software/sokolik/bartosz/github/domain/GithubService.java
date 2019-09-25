@@ -24,6 +24,10 @@ public class GithubService {
         return githubClient.findAllRepositoriesByUsername(owner);
     }
 
+    public GithubResponse fallback(String owner, String repositoryName, Exception e) {
+        return new GithubResponse();
+    }
+
     public List<GithubResponse> fallback(String owner, RuntimeException ex) {
         return List.of(new GithubResponse());
     }
