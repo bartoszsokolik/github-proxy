@@ -11,9 +11,14 @@ import java.util.List;
 public class GithubService {
 
     private final GithubClient githubClient;
+    private final RetrofitGithubClient retrofitGithubClient;
 
     public GithubResponse findByOwnerAndRepositoryName(final String owner, final String repositoryName) {
         return githubClient.findByOwnerAndRepositoryName(owner, repositoryName);
+    }
+
+    public GithubResponse findByOwnerAndRepositoryNameWithRetrofit(final String owner, final String repositoryName) {
+        return retrofitGithubClient.findByOwnerAndRepositoryName(owner, repositoryName).blockingGet();
     }
 
     public List<GithubResponse> findByOwnerName(final String owner) {

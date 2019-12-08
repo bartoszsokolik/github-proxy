@@ -20,6 +20,10 @@ public class RepositoryService {
         return repositoryAssembler.fromGithubResponse(githubService.findByOwnerAndRepositoryName(owner, repositoryName));
     }
 
+    public RepositoryResponse findByOwnerAndRepositoryNameRetro(final String owner, final String repositoryName) {
+        return repositoryAssembler.fromGithubResponse(githubService.findByOwnerAndRepositoryNameWithRetrofit(owner, repositoryName));
+    }
+
     public RepositoryResponseList findByOwner(final String owner) {
         List<RepositoryResponse> repositories = githubService.findByOwnerName(owner).stream()
                 .map(repositoryAssembler::fromGithubResponse)
