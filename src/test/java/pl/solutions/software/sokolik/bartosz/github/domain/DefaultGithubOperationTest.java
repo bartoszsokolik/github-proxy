@@ -2,10 +2,8 @@ package pl.solutions.software.sokolik.bartosz.github.domain;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.solutions.software.sokolik.bartosz.github.domain.dto.GithubResponse;
 
@@ -17,13 +15,13 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GithubServiceTest {
+public class DefaultGithubOperationTest {
 
     @Mock
     private GithubClient githubClient;
 
     @InjectMocks
-    private GithubService githubService;
+    private DefaultGithubOperation defaultGithubOperation;
 
     @Test
     public void findByOwnerAndRepositoryName() {
@@ -34,7 +32,7 @@ public class GithubServiceTest {
 
         when(githubClient.findByOwnerAndRepositoryName(anyString(), anyString())).thenReturn(expected);
 
-        GithubResponse actual = githubService.findByOwnerAndRepositoryName(owner, repo);
+        GithubResponse actual = defaultGithubOperation.findByOwnerAndRepositoryName(owner, repo);
 
         assertEquals(expected, actual);
         verify(githubClient).findByOwnerAndRepositoryName(owner, repo);
@@ -47,7 +45,7 @@ public class GithubServiceTest {
 
         when(githubClient.findAllRepositoriesByUsername(anyString())).thenReturn(expected);
 
-        List<GithubResponse> actual = githubService.findByOwnerName(owner);
+        List<GithubResponse> actual = defaultGithubOperation.findByOwnerName(owner);
 
         assertEquals(expected, actual);
         verify(githubClient).findAllRepositoriesByUsername(owner);

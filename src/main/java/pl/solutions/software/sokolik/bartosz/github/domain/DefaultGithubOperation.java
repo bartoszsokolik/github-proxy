@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GithubService {
+public class DefaultGithubOperation implements GithubOperation {
 
     private final GithubClient githubClient;
     private final RetrofitGithubClient retrofitGithubClient;
