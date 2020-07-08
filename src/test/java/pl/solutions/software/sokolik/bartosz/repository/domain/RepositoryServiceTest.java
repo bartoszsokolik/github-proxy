@@ -1,15 +1,11 @@
 package pl.solutions.software.sokolik.bartosz.repository.domain;
 
-import org.hamcrest.collection.IsCollectionWithSize;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import pl.solutions.software.sokolik.bartosz.github.domain.GithubService;
+import pl.solutions.software.sokolik.bartosz.github.domain.DefaultGithubOperation;
 import pl.solutions.software.sokolik.bartosz.github.domain.dto.GithubResponse;
 import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryResponse;
 import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryResponseList;
@@ -25,7 +21,7 @@ import static org.mockito.Mockito.*;
 public class RepositoryServiceTest {
 
     @Mock
-    private GithubService githubService;
+    private DefaultGithubOperation defaultGithubOperation;
 
     @Mock
     private RepositoryAssembler repositoryAssembler;
@@ -41,13 +37,13 @@ public class RepositoryServiceTest {
         GithubResponse githubResponse = new GithubResponse();
         RepositoryResponse expected = new RepositoryResponse();
 
-        when(githubService.findByOwnerAndRepositoryName(anyString(), anyString())).thenReturn(githubResponse);
+        when(defaultGithubOperation.findByOwnerAndRepositoryName(anyString(), anyString())).thenReturn(githubResponse);
         when(repositoryAssembler.fromGithubResponse(any(GithubResponse.class))).thenReturn(expected);
 
         RepositoryResponse actual = repositoryService.findByOwnerAndRepositoryName(owner, repositoryName);
 
         assertEquals(expected, actual);
-        verify(githubService).findByOwnerAndRepositoryName(owner, repositoryName);
+        verify(defaultGithubOperation).findByOwnerAndRepositoryName(owner, repositoryName);
         verify(repositoryAssembler).fromGithubResponse(githubResponse);
     }
 
@@ -59,7 +55,7 @@ public class RepositoryServiceTest {
         RepositoryResponse repositoryResponse = new RepositoryResponse();
         RepositoryResponseList expected = new RepositoryResponseList(Collections.singletonList(repositoryResponse));
 
-        when(githubService.findByOwnerName(anyString())).thenReturn(Collections.singletonList(githubResponse));
+        when(defaultGithubOperation.findByOwnerName(anyString())).thenReturn(Collections.singletonList(githubResponse));
         when(repositoryAssembler.fromGithubResponse(any(GithubResponse.class))).thenReturn(repositoryResponse);
 
         RepositoryResponseList actual = repositoryService.findByOwner(owner);

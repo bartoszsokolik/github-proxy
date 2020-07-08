@@ -1,7 +1,8 @@
 package pl.solutions.software.sokolik.bartosz.repository;
 
+import static org.springframework.http.HttpStatus.OK;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,16 +17,21 @@ import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryRes
 @RequiredArgsConstructor
 class RepositoryController {
 
-    private final RepositoryService repositoryService;
+  private final RepositoryService repositoryService;
 
-    @GetMapping("/{owner}/{repositoryName}")
-    ResponseEntity<RepositoryResponse> findByOwnerAndRepositoryName(@PathVariable String owner, @PathVariable String repositoryName) {
-        return new ResponseEntity<>(repositoryService.findByOwnerAndRepositoryName(owner, repositoryName), HttpStatus.OK);
-    }
+  @GetMapping("/{owner}/{repositoryName}")
+  ResponseEntity<RepositoryResponse> findByOwnerAndRepositoryName(@PathVariable String owner, @PathVariable String repositoryName) {
+    return new ResponseEntity<>(repositoryService.findByOwnerAndRepositoryName(owner, repositoryName), OK);
+  }
 
-    @GetMapping("/{owner}")
-    ResponseEntity<RepositoryResponseList> findByOwner(@PathVariable String owner) {
-        return new ResponseEntity<>(repositoryService.findByOwner(owner), HttpStatus.OK);
-    }
+  @GetMapping("/retro/{owner}/{repositoryName}")
+  ResponseEntity<RepositoryResponse> findByOwnerAndRepositoryNameRetro(@PathVariable String owner, @PathVariable String repositoryName) {
+      return new ResponseEntity<>(repositoryService.findByOwnerAndRepositoryNameRetro(owner, repositoryName), OK);
+  }
+
+  @GetMapping("/{owner}")
+  ResponseEntity<RepositoryResponseList> findByOwner(@PathVariable String owner) {
+    return new ResponseEntity<>(repositoryService.findByOwner(owner), OK);
+  }
 
 }
