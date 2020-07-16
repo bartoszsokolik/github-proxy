@@ -1,10 +1,11 @@
 package pl.solutions.software.sokolik.bartosz.github.domain;
 
+import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.solutions.software.sokolik.bartosz.github.domain.dto.GithubResponse;
 
-import java.util.List;
+import static pl.solutions.software.sokolik.bartosz.utils.RetrofitExecutor.execute;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class DefaultGithubOperation implements GithubOperation {
     }
 
     public GithubResponse findByOwnerAndRepositoryNameWithRetrofit(final String owner, final String repositoryName) {
-        return retrofitGithubClient.findByOwnerAndRepositoryName(owner, repositoryName).blockingGet();
+        return execute(retrofitGithubClient.findByOwnerAndRepositoryName(owner, repositoryName));
     }
 
     public List<GithubResponse> findByOwnerName(final String owner) {

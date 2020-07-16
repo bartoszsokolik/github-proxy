@@ -1,13 +1,11 @@
 package pl.solutions.software.sokolik.bartosz.repository.domain;
 
+import io.vavr.collection.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.solutions.software.sokolik.bartosz.github.domain.DefaultGithubOperation;
 import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryResponse;
 import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryResponseList;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +23,8 @@ public class RepositoryService {
     }
 
     public RepositoryResponseList findByOwner(final String owner) {
-        List<RepositoryResponse> repositories = defaultGithubOperation.findByOwnerName(owner).stream()
-                .map(repositoryAssembler::fromGithubResponse)
-                .collect(Collectors.toList());
+        List<RepositoryResponse> repositories = defaultGithubOperation.findByOwnerName(owner)
+                .map(repositoryAssembler::fromGithubResponse);
         return new RepositoryResponseList(repositories);
     }
 }

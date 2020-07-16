@@ -1,5 +1,6 @@
 package pl.solutions.software.sokolik.bartosz.github.domain;
 
+import io.vavr.collection.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -7,12 +8,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.solutions.software.sokolik.bartosz.github.domain.dto.GithubResponse;
 
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultGithubOperationTest {
@@ -41,7 +40,7 @@ public class DefaultGithubOperationTest {
     @Test
     public void findByOwnerName() {
         final String owner = "Owner";
-        List<GithubResponse> expected = Collections.singletonList(new GithubResponse());
+        List<GithubResponse> expected = List.of(new GithubResponse());
 
         when(githubClient.findAllRepositoriesByUsername(anyString())).thenReturn(expected);
 

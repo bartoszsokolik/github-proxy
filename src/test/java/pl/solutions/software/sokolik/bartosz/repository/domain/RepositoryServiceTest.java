@@ -1,5 +1,6 @@
 package pl.solutions.software.sokolik.bartosz.repository.domain;
 
+import io.vavr.collection.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -10,10 +11,9 @@ import pl.solutions.software.sokolik.bartosz.github.domain.dto.GithubResponse;
 import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryResponse;
 import pl.solutions.software.sokolik.bartosz.repository.domain.dto.RepositoryResponseList;
 
-import java.util.Collections;
-
-import static org.hamcrest.collection.IsCollectionWithSize.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -53,14 +53,14 @@ public class RepositoryServiceTest {
 
         GithubResponse githubResponse = new GithubResponse();
         RepositoryResponse repositoryResponse = new RepositoryResponse();
-        RepositoryResponseList expected = new RepositoryResponseList(Collections.singletonList(repositoryResponse));
+        RepositoryResponseList expected = new RepositoryResponseList(List.of(repositoryResponse));
 
-        when(defaultGithubOperation.findByOwnerName(anyString())).thenReturn(Collections.singletonList(githubResponse));
+        when(defaultGithubOperation.findByOwnerName(anyString())).thenReturn(List.of(githubResponse));
         when(repositoryAssembler.fromGithubResponse(any(GithubResponse.class))).thenReturn(repositoryResponse);
 
         RepositoryResponseList actual = repositoryService.findByOwner(owner);
 
-        assertThat(actual.getRepositories(), hasSize(1));
+        assertThat(actual.getRepositories().asJava(), hasSize(1));
         assertEquals(expected.getRepositories().get(0), actual.getRepositories().get(0));
     }
 

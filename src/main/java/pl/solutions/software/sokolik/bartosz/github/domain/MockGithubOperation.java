@@ -1,11 +1,10 @@
 package pl.solutions.software.sokolik.bartosz.github.domain;
 
+import io.vavr.collection.List;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import pl.solutions.software.sokolik.bartosz.github.domain.dto.GithubResponse;
-
-import java.util.List;
 
 import static pl.solutions.software.sokolik.bartosz.SpringProfiles.MOCK;
 

@@ -1,9 +1,8 @@
 package pl.solutions.software.sokolik.bartosz.product;
 
-import java.util.List;
+import io.vavr.collection.List;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductService {
 
-  @Autowired
-  private ProductRepository productRepository;
+  private final ProductRepository productRepository;
 
   public Product create(Product product) {
     log.info("create");
@@ -29,6 +28,6 @@ public class ProductService {
   }
 
   public List<Product> getAll() {
-    return productRepository.findAll();
+    return List.ofAll(productRepository.findAll());
   }
 }
